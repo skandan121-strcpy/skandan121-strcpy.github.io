@@ -1,36 +1,168 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skandan | Engineering</title>
     <style>
+        /* 1. The Native Apple Font Setup */
         body {
-            /* Replace 'background.jpg' with your exact image filename */
-            background-image: url('Assets/background.jpg');
-            
-            /* These properties ensure the image fits the screen perfectly */
-            background-size: cover;       /* Scales the image to cover the whole screen */
-            background-position: center;  /* Keeps the focal point centered */
-            background-attachment: fixed; /* Keeps the background still when you scroll */
-            background-repeat: no-repeat; /* Prevents the image from tiling like a mosaic */
-            
-            color: #e4e4e7; 
-            font-family: sans-serif;
-            margin: 40px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* A dark, semi-transparent box to make text readable over the image */
-        .content-box {
-            background-color: rgba(18, 18, 20, 0.70); /* 85% opaque dark box */
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 800px;
+        /* 2. The Animated "Breathing" Background */
+        .animated-bg {
+            position: fixed;
+            top: -5%; left: -5%;
+            width: 110vw; height: 110vh; /* Slightly larger to allow zooming */
+            background-image: url('Assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            /* Runs the breathe animation forever */
+            animation: breathe 20s infinite alternate ease-in-out; 
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        /* 3. The Layout Container */
+        .container {
+            margin-top: 15vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between the elliptical islands */
+            width: 100%;
+        }
+
+        /* 4. The Translucent Grey Island (Pill Shape) */
+        .island {
+            background: rgba(80, 80, 85, 0.35); /* Translucent Grey */
+            backdrop-filter: blur(24px);        /* Heavy frosted glass blur */
+            -webkit-backdrop-filter: blur(24px);
+            
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px; /* Makes it a perfect pill shape */
+            
+            cursor: pointer;
+            overflow: hidden;
+            
+            /* The starting size of the pill */
+            width: 220px;
+            height: 60px;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            
+            /* Apple-style spring animation */
+            transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Hover effect to show it is clickable */
+        .island:hover {
+            background: rgba(100, 100, 105, 0.45);
+            transform: translateY(-2px);
+        }
+
+        /* 5. The Expanded State */
+        .island.active {
+            width: 400px;
+            height: 250px;
+            border-radius: 35px; /* Softens corners when it becomes a rectangle */
+            background: rgba(60, 60, 65, 0.5); /* Slightly darker when expanded */
+            transform: translateY(0);
+            cursor: default;
+        }
+
+        /* 6. Internal Text Styling */
+        .island-title {
+            margin: 0;
+            line-height: 60px; /* Centers text vertically in the pill */
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .island.active .island-title {
+            line-height: 40px;
+            margin-top: 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        /* The hidden content that fades in when expanded */
+        .island-content {
+            padding: 0 25px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+            transition-delay: 0s;
+            font-size: 0.95em;
+            color: rgba(255,255,255,0.85);
+            display: none; /* Hidden by default */
+        }
+
+        .island.active .island-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s; /* Fades in smoothly after expansion starts */
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="content-box">
-        <h1>System Live</h1>
-        <p>Testing GitHub Pages deployment framework with a custom background image.</p>
+
+    <div class="animated-bg"></div>
+
+    <div class="container">
+        
+        <div class="island" onclick="toggleIsland(this)">
+            <h2 class="island-title">About Me</h2>
+            <div class="island-content">
+                <p>Engineering student specializing in low-level systems architecture and network security.</p>
+                <p>Click me again to close.</p>
+            </div>
+        </div>
+
+        <div class="island" onclick="toggleIsland(this)">
+            <h2 class="island-title">Projects</h2>
+            <div class="island-content">
+                <p><strong>NIDS Server:</strong> Hardware-integrated network intrusion detection system built on Raspberry Pi.</p>
+                <a href="#" style="color: #0a84ff; text-decoration: none;">View Documentation ➔</a>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        function toggleIsland(element) {
+            // Checks if the clicked island is already expanded
+            const isCurrentlyActive = element.classList.contains('active');
+            
+            // Optional: Close all other islands first so only one is open at a time
+            const allIslands = document.querySelectorAll('.island');
+            allIslands.forEach(island => island.classList.remove('active'));
+            
+            // If it wasn't already active, expand it
+            if (!isCurrentlyActive) {
+                element.classList.add('active');
+            }
+        }
+    </script>
+
 </body>
 </html>
