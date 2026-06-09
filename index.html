@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skandan | Engineering</title>
+    <title>Skandan | Computing</title>
     <style>
-        /* 1. The Native Apple Font Setup */
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -13,20 +12,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* 2. The Animated "Breathing" Background */
+        /* The Animated Breathing Background */
         .animated-bg {
             position: fixed;
             top: -5%; left: -5%;
-            width: 110vw; height: 110vh; /* Slightly larger to allow zooming */
+            width: 110vw; height: 110vh;
             background-image: url('Assets/background.jpg');
             background-size: cover;
             background-position: center;
             z-index: -1;
-            /* Runs the breathe animation forever */
             animation: breathe 20s infinite alternate ease-in-out; 
         }
 
@@ -35,92 +34,86 @@
             100% { transform: scale(1.08); }
         }
 
-        /* 3. The Layout Container */
-        .container {
-            margin-top: 15vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px; /* Space between the elliptical islands */
-            width: 100%;
-        }
-
-        /* 4. The Translucent Grey Island (Pill Shape) */
-        .island {
-            background: rgba(80, 80, 85, 0.35); /* Translucent Grey */
-            backdrop-filter: blur(24px);        /* Heavy frosted glass blur */
-            -webkit-backdrop-filter: blur(24px);
-            
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px; /* Makes it a perfect pill shape */
-            
-            cursor: pointer;
-            overflow: hidden;
-            
-            /* The starting size of the pill */
-            width: 220px;
-            height: 60px;
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            
-            /* Apple-style spring animation */
-            transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        /* Hover effect to show it is clickable */
-        .island:hover {
-            background: rgba(100, 100, 105, 0.45);
-            transform: translateY(-2px);
-        }
-
-        /* 5. The Expanded State */
-        .island.active {
-            width: 400px;
-            height: 250px;
-            border-radius: 35px; /* Softens corners when it becomes a rectangle */
-            background: rgba(60, 60, 65, 0.5); /* Slightly darker when expanded */
-            transform: translateY(0);
-            cursor: default;
-        }
-
-        /* 6. Internal Text Styling */
-        .island-title {
-            margin: 0;
-            line-height: 60px; /* Centers text vertically in the pill */
+        /* The Main Header Text */
+        .hero-text {
             text-align: center;
+            margin-bottom: 50px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .hero-text h1 {
+            font-size: 3.5em;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero-text p {
+            font-size: 1.2em;
+            margin: 5px 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        /* The Side-by-Side Flexbox Container */
+        .dock-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        /* The Hover-Expanding Islands */
+        .island-link {
+            /* Glassmorphism Styling */
+            background: rgba(80, 80, 85, 0.35);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            
+            /* The Starting Shape (Small Circle) */
+            width: 65px;
+            height: 65px;
+            border-radius: 50px;
+            
+            text-decoration: none; /* Removes the default blue link underline */
+            color: white;
+            display: flex;
+            align-items: center;
+            overflow: hidden; /* Keeps text hidden when collapsed */
+            
+            /* The Spring Animation */
+            transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        /* What happens when you hover over it */
+        .island-link:hover {
+            width: 220px; /* Expands horizontally into a pill */
+            background: rgba(100, 100, 105, 0.5);
+            transform: translateY(-3px); /* Floats up slightly */
+        }
+
+        /* The Icon that always shows */
+        .icon {
+            min-width: 65px; /* Keeps the icon perfectly centered in the circle */
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        /* The Text that reveals on hover */
+        .label {
             font-size: 1.1em;
             font-weight: 500;
-            width: 100%;
+            white-space: nowrap; /* Prevents text from stacking vertically */
+            opacity: 0;
+            transform: translateX(-10px);
             transition: all 0.3s ease;
         }
 
-        .island.active .island-title {
-            line-height: 40px;
-            margin-top: 15px;
-            font-size: 1.4em;
-            font-weight: 600;
-        }
-
-        /* The hidden content that fades in when expanded */
-        .island-content {
-            padding: 0 25px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-            transition-delay: 0s;
-            font-size: 0.95em;
-            color: rgba(255,255,255,0.85);
-            display: none; /* Hidden by default */
-        }
-
-        .island.active .island-content {
+        .island-link:hover .label {
             opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.2s; /* Fades in smoothly after expansion starts */
-            display: block;
+            transform: translateX(0);
+            transition-delay: 0.1s; /* Waits a split second for the pill to expand first */
         }
     </style>
 </head>
@@ -128,41 +121,30 @@
 
     <div class="animated-bg"></div>
 
-    <div class="container">
-        
-        <div class="island" onclick="toggleIsland(this)">
-            <h2 class="island-title">About Me</h2>
-            <div class="island-content">
-                <p>Engineering student specializing in low-level systems architecture and network security.</p>
-                <p>Click me again to close.</p>
-            </div>
-        </div>
-
-        <div class="island" onclick="toggleIsland(this)">
-            <h2 class="island-title">Projects</h2>
-            <div class="island-content">
-                <p><strong>NIDS Server:</strong> Hardware-integrated network intrusion detection system built on Raspberry Pi.</p>
-                <a href="#" style="color: #0a84ff; text-decoration: none;">View Documentation ➔</a>
-            </div>
-        </div>
-
+    <div class="hero-text">
+        <h1>Skandan</h1>
+        <p>Computing @ ANU</p>
+        <p style="font-size: 0.95em; opacity: 0.8;">Cyber Security • Intelligent Systems • Finance</p>
     </div>
 
-    <script>
-        function toggleIsland(element) {
-            // Checks if the clicked island is already expanded
-            const isCurrentlyActive = element.classList.contains('active');
-            
-            // Optional: Close all other islands first so only one is open at a time
-            const allIslands = document.querySelectorAll('.island');
-            allIslands.forEach(island => island.classList.remove('active'));
-            
-            // If it wasn't already active, expand it
-            if (!isCurrentlyActive) {
-                element.classList.add('active');
-            }
-        }
-    </script>
+    <div class="dock-container">
+        
+        <a href="about.html" class="island-link">
+            <span class="icon">👤</span>
+            <span class="label">About Me</span>
+        </a>
+
+        <a href="projects/nids.html" class="island-link">
+            <span class="icon">🛡️</span>
+            <span class="label">NIDS Project</span>
+        </a>
+
+        <a href="https://github.com/skandan" target="_blank" class="island-link">
+            <span class="icon">💻</span>
+            <span class="label">GitHub</span>
+        </a>
+
+    </div>
 
 </body>
 </html>
