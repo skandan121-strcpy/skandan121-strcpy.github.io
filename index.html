@@ -59,9 +59,12 @@
             height: 45px;
             border-radius: 50px;
             overflow: hidden;
-            transition: all 0.8s cubic-bezier(0.32, 0.72, 0, 1);
+            
+            /* 1.2s makes it slow, 'linear' ensures perfectly uniform speed */
+            transition: width 1.2s linear, background 0.8s ease;
             white-space: nowrap;
         }
+
         .nav-link:hover {
             width: auto;
             padding-right: 15px;
@@ -72,10 +75,13 @@
             font-size: 0.9em;
             font-weight: 500;
             opacity: 0;
-            transform: translateX(-10px);
-            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+            /* Using a longer fade to match the 1.2s expansion */
+            transition: opacity 0.8s linear 0.2s; 
         }
-        .nav-link:hover .nav-label { opacity: 1; transform: translateX(0); }
+
+        .nav-link:hover .nav-label {
+            opacity: 1;
+        }
 
         /* Content Grid */
         .content-grid {
