@@ -49,23 +49,20 @@ body {
 }
 
 .nav-link {
-    color: #ffffff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    width: 45px; /* Starting size */
+    /* ... existing styles ... */
+    width: 45px; /* Starting width */
     height: 45px;
     border-radius: 50px;
     overflow: hidden;
     
-    /* Transition max-width instead of width */
-    transition: max-width 1.2s linear, background 0.8s ease;
+    /* Transition width uniformly over 1.2s */
+    transition: width 1.2s linear, background 0.8s ease;
     white-space: nowrap;
 }
 
 .nav-link:hover {
-    /* 200px is enough to cover your longest label "Software Projects" */
-    max-width: 200px; 
+    /* Set a specific width that is wide enough for your longest label */
+    width: 160px; 
     padding-right: 15px;
     background: rgba(255, 255, 255, 0.15);
 }
