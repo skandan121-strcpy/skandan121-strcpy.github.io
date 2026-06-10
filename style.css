@@ -28,13 +28,12 @@ body {
     100% { transform: scale(1.08); }
 }
 
-/* 1. Dynamic Island Navigation - The Bar */
+/* Dynamic Island Navigation */
 .top-nav {
     position: fixed;
     top: 25px;
     background: rgba(40, 40, 45, 0.45);
     backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     border-radius: 50px;
@@ -42,90 +41,55 @@ body {
     display: flex;
     gap: 8px;
     z-index: 100;
-    
-    /* REMOVE the 'all' transition. Only transition specific properties */
-    /* Set this to be exactly the same as the link duration */
-    transition: width 1.2s linear, padding 1.2s linear;
 }
 
 .nav-link {
-    /* ... existing styles ... */
-    width: 45px; /* Starting width */
+    width: 45px;
     height: 45px;
     border-radius: 50px;
     overflow: hidden;
-    
-    /* Transition width uniformly over 1.2s */
+    display: flex;
+    align-items: center;
     transition: width 1.2s linear, background 0.8s ease;
     white-space: nowrap;
+    text-decoration: none;
+    color: #fff;
 }
-
-.nav-link:hover {
-    /* Set a specific width that is wide enough for your longest label */
-    width: 160px; 
-    padding-right: 15px;
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.nav-icon { min-width: 45px; display: flex; justify-content: center; font-size: 1.1em; }
-.nav-label {
-    font-size: 0.9em;
-    font-weight: 500;
-    opacity: 0;
-    transition: opacity 0.8s linear 0.2s; 
-}
+.nav-link:hover { width: 180px; padding-right: 15px; background: rgba(255, 255, 255, 0.15); }
+.nav-icon { min-width: 45px; display: flex; justify-content: center; }
+.nav-label { opacity: 0; transition: opacity 0.8s linear 0.2s; }
 .nav-link:hover .nav-label { opacity: 1; }
 
-/* Content Grid */
+/* Grid Layout */
 .content-grid {
-    max-width: 900px;
+    max-width: 700px;
     width: 90%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, 300px);
+    justify-content: center;
+    gap: 40px;
 }
-.page-card {
-    background: rgba(30, 30, 35, 0.35);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 30px;
-    transition: transform 0.3s ease;
-}
-.page-card:hover { transform: translateY(-4px); border: 1px solid rgba(255, 255, 255, 0.25); }
 
-/* Responsive Mobile Fix */
-@media (max-width: 600px) {
-    .content-grid { grid-template-columns: 1fr; }
-}
-/* The Square Card */
-.square-card {
+/* Cards */
+.square-card, .clock-card {
     width: 300px;
     height: 300px;
     background: rgba(30, 30, 35, 0.35);
     backdrop-filter: blur(16px);
-    border-radius: 40px; 
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
+    border-radius: 40px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Total duration = 12 images * 4s each = 48 seconds */
+/* Photo Carousel */
 .photo-container img {
     position: absolute;
-    width: 100%; 
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     opacity: 0;
     animation: fade 48s infinite;
 }
-
-/* 12-image sequence delays */
 .photo-container img:nth-child(1) { animation-delay: 0s; }
 .photo-container img:nth-child(2) { animation-delay: 4s; }
 .photo-container img:nth-child(3) { animation-delay: 8s; }
@@ -139,10 +103,10 @@ body {
 .photo-container img:nth-child(11) { animation-delay: 40s; }
 .photo-container img:nth-child(12) { animation-delay: 44s; }
 
-/* Keyframes adjusted for 12 images */
 @keyframes fade {
-    0% { opacity: 0; }
-    8.33% { opacity: 1; }
-    16.66% { opacity: 0; }
-    100% { opacity: 0; }
+    0% { opacity: 0; } 8.33% { opacity: 1; } 16.66% { opacity: 0; } 100% { opacity: 0; }
 }
+
+/* Clock */
+.clock-card { display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; }
+#clock { font-size: 3rem; font-weight: 700; font-family: monospace; }
