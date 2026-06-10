@@ -4,113 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skandan | Computing</title>
-    <style>
-        /* Global Styles */
-        * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-top: 150px;
-            overflow-x: hidden;
-        }
-
-        /* Animated Breathing Background */
-        .animated-bg {
-            position: fixed;
-            top: -5%; left: -5%;
-            width: 110vw; height: 110vh;
-            background-image: url('Assets/background.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            animation: breathe 20s infinite alternate ease-in-out; 
-        }
-        @keyframes breathe {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
-        }
-
-        /* Dynamic Island Navigation */
-        .top-nav {
-            position: fixed;
-            top: 25px;
-            background: rgba(40, 40, 45, 0.45);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            border-radius: 50px;
-            padding: 8px;
-            display: flex;
-            gap: 8px;
-            z-index: 100;
-            
-            /* The Bar itself now expands/moves slowly (1.5s) */
-            transition: all 2.0s linear; 
-        }
-        .nav-link {
-            color: #ffffff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 50px;
-            overflow: hidden;
-            
-            /* 1.2s makes it slow, 'linear' ensures perfectly uniform speed */
-            transition: width 1.2s linear, background 0.8s ease;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            width: auto;
-            padding-right: 15px;
-            background: rgba(255, 255, 255, 0.15);
-        }
-        .nav-icon { min-width: 45px; display: flex; justify-content: center; font-size: 1.1em; }
-        .nav-label {
-            font-size: 0.9em;
-            font-weight: 500;
-            opacity: 0;
-            /* Using a longer fade to match the 1.2s expansion */
-            transition: opacity 0.8s linear 0.2s; 
-        }
-
-        .nav-link:hover .nav-label {
-            opacity: 1;
-        }
-
-        /* Content Grid */
-        .content-grid {
-            max-width: 900px;
-            width: 90%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
-        .page-card {
-            background: rgba(30, 30, 35, 0.35);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 30px;
-            transition: transform 0.3s ease;
-        }
-        .page-card:hover { transform: translateY(-4px); border: 1px solid rgba(255, 255, 255, 0.25); }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="animated-bg"></div>
 
     <nav class="top-nav">
+        <a href="index.html" class="nav-link">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </a>
         <a href="about.html" class="nav-link">
             <span class="nav-icon">🫵🏾</span>
             <span class="nav-label">About</span>
@@ -133,15 +37,14 @@
         </a>
     </nav>
 
-    
-    <div class="content-grid">
+    <main class="content-grid">
         <div class="page-card" style="grid-column: 1 / -1; text-align: center;">
             <h2>Skandan | Computing at ANU</h2>
             <p>Cyber Security & Intelligent Systems Major • Finance & Corporate Sustainability Minor</p>
         </div>
         <div class="page-card"><h2>Software Projects</h2><p>NIDS development, microarchitecture extensions.</p></div>
         <div class="page-card"><h2>Physical Builds</h2><p>Mechanical teardown and bike restoration.</p></div>
-    </div>
+    </main>
 
 </body>
 </html>
